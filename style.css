@@ -2,8 +2,8 @@
 
 :root {
     --base-font-size: 16px; 
-    --bg-color: #F0F4F8; /* 눈이 편안한 옅은 회청색 배경 */
-    --panel-bg: #FFFFFF; /* 패널은 흰색으로 통일하여 가독성 확보 */
+    --bg-color: #F0F4F8; 
+    --panel-bg: #FFFFFF; 
     --text-main: #2C3E50;
     --text-sub: #7F8C8D;
 }
@@ -20,11 +20,10 @@ body {
     color: var(--text-main);
 }
 
-/* 그리드 배치를 직관적인 3열 2행으로 확정 (엉킴 방지) */
 .dashboard-container {
     display: grid;
-    grid-template-columns: 280px 1fr 280px; /* 좌우측 크기 고정, 가운데 넓게 */
-    grid-template-rows: 1fr 1fr; /* 위아래 균등 분배 */
+    grid-template-columns: 280px 1fr 280px; 
+    grid-template-rows: 1fr 1fr; 
     gap: 20px;
     width: 96vw; height: 92vh; padding: 20px;
     grid-template-areas:
@@ -41,13 +40,13 @@ body {
     justify-content: center; align-items: center; text-align: center;
 }
 
-/* 패널별 위치 지정 및 상단 포인트 색상 적용 */
-.panel-clock { grid-area: clock; border-top: 6px solid #4A90E2; } /* 파랑 */
-.panel-title { grid-area: title; border-top: 6px solid #F39C12; } /* 주황 */
-.panel-qr { grid-area: qr; border-top: 6px solid #2ECC71; } /* 초록 */
-.panel-settings { grid-area: set; border-top: 6px solid #9B59B6; } /* 보라 */
-.panel-sequence { grid-area: seq; border-top: 6px solid #E74C3C; justify-content: flex-start; padding-top: 30px; } /* 빨강 */
-.panel-music { grid-area: music; border-top: 6px solid #34495E; } /* 남색 */
+/* 패널 상단 포인트 색상 */
+.panel-clock { grid-area: clock; border-top: 6px solid #4A90E2; } 
+.panel-title { grid-area: title; border-top: 6px solid #F39C12; } 
+.panel-qr { grid-area: qr; border-top: 6px solid #2ECC71; } 
+.panel-settings { grid-area: set; border-top: 6px solid #9B59B6; } 
+.panel-sequence { grid-area: seq; border-top: 6px solid #E74C3C; justify-content: flex-start; padding-top: 30px; } 
+.panel-music { grid-area: music; border-top: 6px solid #34495E; } 
 
 h1 { font-size: 2.5rem; font-weight: normal; color: #1A252F; }
 .panel-title-text { font-size: 1.3rem; margin-bottom: 1rem; color: var(--text-sub); font-weight: bold; }
@@ -82,7 +81,7 @@ h1 { font-size: 2.5rem; font-weight: normal; color: #1A252F; }
     font-size: 1.4rem; line-height: 2.2; color: var(--text-main);
 }
 
-/* 둥근 아이콘 버튼 공통 디자인 */
+/* 둥근 아이콘 버튼 디자인 */
 .icon-btn {
     width: 90px; height: 90px; border-radius: 50%;
     border: none; display: flex; justify-content: center; align-items: center;
@@ -90,8 +89,6 @@ h1 { font-size: 2.5rem; font-weight: normal; color: #1A252F; }
     background-color: #F4F6F8; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 .icon-btn:hover { transform: scale(1.05); }
-
-/* 설정 버튼 아이콘 */
 .btn-icon { font-size: 45px; }
 
 /* 음악 재생 버튼 그라데이션 */
@@ -129,6 +126,7 @@ h1 { font-size: 2.5rem; font-weight: normal; color: #1A252F; }
     padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1.1rem; outline: none; font-family: inherit; resize: none;
 }
 .modal-content input:focus, .modal-content textarea:focus { border-color: #4A90E2; }
+.file-input { margin-top: 5px; font-size: 1rem; }
 .btn-group { display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.2rem; }
 
 .simple-btn {
