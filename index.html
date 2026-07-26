@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- 좌측: 크기가 커진 아날로그 시계 -->
+        <!-- 1열 1행 (좌측 상단): 아날로그 시계 -->
         <div class="panel panel-clock">
             <h2 class="panel-title-text">현재 시각</h2>
             <div class="analog-clock">
@@ -19,18 +19,25 @@
             </div>
         </div>
 
-        <!-- 중앙 상단: 강좌명 -->
+        <!-- 2열 1행 (중앙 상단): 강좌명 -->
         <div class="panel panel-title">
             <h1 id="course-title">강좌명을 입력해 주십시오</h1>
         </div>
 
-        <!-- 우측 상단: 출석 QR -->
+        <!-- 3열 1행 (우측 상단): 출석 QR -->
         <div class="panel panel-qr">
             <h2 class="panel-title-text">출석 확인</h2>
             <img id="qr-image" src="https://via.placeholder.com/200?text=QR+Code" alt="출석 QR 코드">
         </div>
 
-        <!-- 중앙 하단: 강의 순서 -->
+        <!-- 1열 2행 (좌측 하단): 설정 버튼 -->
+        <div class="panel panel-settings">
+            <button id="settings-btn" class="icon-btn">
+                <span class="btn-icon">⚙️</span>
+            </button>
+        </div>
+
+        <!-- 2열 2행 (중앙 하단): 강의 순서 -->
         <div class="panel panel-sequence">
             <h2 class="panel-title-text">강의 순서</h2>
             <ul id="lecture-sequence">
@@ -40,16 +47,9 @@
             </ul>
         </div>
 
-        <!-- 좌측 하단: 설정 버튼 (글씨 제거, 크기 축소) -->
-        <div class="panel panel-settings">
-            <button id="settings-btn" class="settings-btn">
-                <span class="settings-icon">⚙️</span>
-            </button>
-        </div>
-
-        <!-- 우측 하단: 음악 재생 버튼 (글씨 제거, 크기 축소) -->
+        <!-- 3열 2행 (우측 하단): 음악 재생 버튼 -->
         <div class="panel panel-music">
-            <button id="music-toggle-btn" class="play-btn"></button>
+            <button id="music-toggle-btn" class="icon-btn play-btn"></button>
             <div id="yt-container" style="display: none;"></div>
         </div>
     </div>
@@ -65,7 +65,7 @@
             <label>강좌명 기입:</label>
             <input type="text" id="input-title" placeholder="변경하실 강좌명을 입력하십시오.">
 
-            <label>출석 QR 이미지 업로드:</label>
+            <label>출석 QR 이미지 직접 업로드:</label>
             <input type="file" id="input-qr-file" accept="image/*" class="file-input">
 
             <label>유튜브 영상 주소(URL):</label>
