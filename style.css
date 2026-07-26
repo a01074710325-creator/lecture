@@ -1,169 +1,147 @@
-@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Square+Round&family=Jua&display=swap');
 
 :root {
     --base-font-size: 16px; 
+    --bg-color: #F4F7FB;
+    --panel-bg: #FFFFFF;
+    --text-main: #2C3E50;
+    --text-sub: #7F8C8D;
+    --shadow: 0 10px 30px rgba(149, 157, 165, 0.15);
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-    font-size: var(--base-font-size);
-}
+html { font-size: var(--base-font-size); }
 
 body {
-    background: linear-gradient(135deg, #1A4EB8 0%, #102B6E 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    font-family: 'Jua', sans-serif;
+    background-color: var(--bg-color);
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh; margin: 0;
+    /* 이전 요청사항인 둥근 느낌과 세련됨을 타협한 깔끔한 폰트 조합 */
+    font-family: 'NanumSquareRound', 'Jua', sans-serif;
+    color: var(--text-main);
 }
 
+/* 그리드 레이아웃 세부 조정 */
 .dashboard-container {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 1fr 1.5fr;
+    /* 시계창 넓게, 가운데 유연하게, 우측 고정 */
+    grid-template-columns: 350px 1fr 220px;
+    /* 시계와 상단 메뉴, 가운데 내용, 하단 버튼 높이 분배 */
+    grid-template-rows: 220px 1fr 120px;
     gap: 1.5rem;
-    width: 96vw;
-    height: 92vh;
-    padding: 1.5rem;
+    width: 96vw; height: 92vh; padding: 1.5rem;
+    grid-template-areas:
+        "clock title qr"
+        "clock seq   seq"
+        "set   seq   music";
 }
 
 .panel {
-    border-radius: 1.5rem;
+    background-color: var(--panel-bg);
+    border-radius: 24px;
     padding: 1.5rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    border: 1px solid rgba(0,0,0,0.02);
 }
 
-/* 위젯 색상 구성 */
-.card-white { background-color: #ffffff; color: #333; }
-.card-white h2 { color: #555; }
+.panel-clock { grid-area: clock; }
+.panel-title { grid-area: title; }
+.panel-qr { grid-area: qr; }
+.panel-sequence { grid-area: seq; align-items: flex-start; padding: 3rem; }
+.panel-settings { grid-area: set; }
+.panel-music { grid-area: music; }
 
-/* 겉돌지 않도록 차분하고 조화로운 크림/베이지 톤으로 변경 */
-.card-cream { background-color: #FFF3E2; color: #4A3B32; border: 2px solid #FFE0C2; }
-.card-cream h1 { color: #4A3B32; }
+h1 { font-size: 2.8rem; font-weight: normal; color: #1A252F; }
+.panel-title-text { font-size: 1.3rem; margin-bottom: 1.2rem; color: var(--text-sub); }
 
-.card-blue { background-color: #4A90E2; color: #fff; }
-.card-blue h2 { color: #E6F0FA; }
-.card-transparent { background-color: rgba(255, 255, 255, 0.1); border: 2px dashed rgba(255,255,255,0.3); }
-.card-transparent h2 { color: #fff; }
-
-h1 { font-size: 2.8rem; font-weight: normal; }
-h2 { font-size: 1.5rem; margin-bottom: 1.5rem; font-weight: normal; }
-
-/* 아날로그 시계 스타일 */
+/* 시계 디자인 (크기 확대 및 심플화) */
 .analog-clock {
-    width: 140px; height: 140px;
-    border: 6px solid #E0E5EC;
-    border-radius: 50%;
-    position: relative;
+    width: 240px; height: 240px;
+    border: 8px solid #F0F3F8;
+    border-radius: 50%; position: relative;
     background: #ffffff;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.05), 0 8px 20px rgba(0,0,0,0.08);
+    margin-top: 1rem;
 }
 .hand {
-    position: absolute;
-    bottom: 50%; left: 50%;
-    transform-origin: bottom center;
-    background: #333;
-    border-radius: 4px;
-    transform: translateX(-50%) rotate(0deg);
+    position: absolute; bottom: 50%; left: 50%;
+    transform-origin: bottom center; background: #333;
+    border-radius: 10px; transform: translateX(-50%) rotate(0deg);
 }
-.hour-hand { width: 6px; height: 35%; background: #2C3E50; z-index: 3; }
-.min-hand { width: 4px; height: 45%; background: #5D6D7E; z-index: 2; }
-.sec-hand { width: 2px; height: 50%; background: #E74C3C; z-index: 4; }
+.hour-hand { width: 8px; height: 32%; background: #2C3E50; z-index: 3; }
+.min-hand { width: 5px; height: 42%; background: #7F8C8D; z-index: 2; }
+.sec-hand { width: 2px; height: 48%; background: #E74C3C; z-index: 4; }
 .center-dot {
     position: absolute; top: 50%; left: 50%;
-    width: 14px; height: 14px;
-    background: #2C3E50;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
+    width: 18px; height: 18px; background: #2C3E50;
+    border-radius: 50%; transform: translate(-50%, -50%); z-index: 5;
 }
 
-#qr-image { width: 9rem; height: 9rem; object-fit: contain; background: #fff; border-radius: 12px; }
+#qr-image { width: 100%; max-width: 160px; aspect-ratio: 1/1; object-fit: contain; border-radius: 12px; }
 
 #lecture-sequence {
-    list-style: none; text-align: left; width: 90%;
-    font-size: 1.5rem; line-height: 2; color: #ffffff;
+    list-style: none; text-align: left; width: 100%;
+    font-size: 1.6rem; line-height: 2.2; color: var(--text-main);
 }
 
-/* 음악 재생 버튼 */
+/* 음악 재생 버튼 (버튼만 강조) */
 .play-btn {
-    width: 90px; height: 90px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #E09FFF, #B46BEE, #833AB4);
-    border: none;
-    box-shadow: 0 8px 15px rgba(131, 58, 180, 0.4);
-    cursor: pointer;
-    position: relative;
-    transition: transform 0.2s;
+    width: 75px; height: 75px; border-radius: 50%;
+    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+    border: none; box-shadow: 0 8px 20px rgba(161, 140, 209, 0.4);
+    cursor: pointer; position: relative; transition: all 0.2s ease;
 }
 .play-btn::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 55%;
+    content: ''; position: absolute; top: 50%; left: 54%;
     transform: translate(-50%, -50%);
-    border-style: solid;
-    border-width: 15px 0 15px 24px;
+    border-style: solid; border-width: 12px 0 12px 20px;
     border-color: transparent transparent transparent #ffffff;
 }
-.play-btn.playing { background: radial-gradient(circle at 30% 30%, #FF9F9F, #EE6B6B, #B43A3A); box-shadow: 0 8px 15px rgba(180, 58, 58, 0.4); }
+.play-btn.playing { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); box-shadow: 0 8px 20px rgba(255, 154, 158, 0.4); }
 .play-btn.playing::after {
     border-style: solid; border-width: 0; width: 20px; height: 20px;
-    background-color: #ffffff; left: 50%;
+    background-color: #ffffff; left: 50%; border-radius: 2px;
 }
-.play-btn:hover { transform: scale(1.05); }
+.play-btn:hover { transform: scale(1.08); }
 
-/* 설정 버튼 */
+/* 설정 버튼 (버튼만 강조) */
 .settings-btn {
-    width: 80px; height: 80px;
-    border-radius: 25px;
-    background: #25262B;
-    border: 3px solid #3B3C42;
+    width: 75px; height: 75px; border-radius: 22px;
+    background: #ffffff; border: 2px solid #E4E9F2;
     display: flex; justify-content: center; align-items: center;
-    cursor: pointer;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-    transition: transform 0.2s;
+    cursor: pointer; box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
 }
-.settings-icon { font-size: 45px; color: #A0A2AB; }
-.settings-btn:hover { transform: scale(1.05); }
+.settings-icon { font-size: 35px; color: #7F8C8D; }
+.settings-btn:hover { transform: scale(1.08); border-color: #D5DBE4; }
 
 /* 모달창 스타일 */
 .modal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 1000;
+    background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px);
+    display: flex; justify-content: center; align-items: center; z-index: 1000;
 }
 .modal.hidden { display: none; }
 .modal-content {
-    background: #ffffff; padding: 2.5rem; border-radius: 1.5rem;
+    background: #ffffff; padding: 2.5rem; border-radius: 20px;
     width: 32rem; display: flex; flex-direction: column; gap: 0.8rem;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
-.modal-content h3 { color: #2C3E50; margin-bottom: 0.5rem; font-size: 1.8rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; font-weight: normal; }
-.modal-content label { color: #5D6D7E; margin-top: 0.5rem; font-size: 1.2rem; }
-.modal-content input, .modal-content textarea { 
-    padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1.1rem; outline: none; font-family: 'Jua', sans-serif; resize: none;
+.modal-content h3 { color: var(--text-main); margin-bottom: 0.5rem; font-size: 1.6rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
+.modal-content label { color: var(--text-sub); margin-top: 0.5rem; font-size: 1.1rem; }
+.modal-content input[type="text"], .modal-content textarea { 
+    padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1.1rem; outline: none; font-family: inherit; resize: none;
 }
-.modal-content input:focus, .modal-content textarea:focus { border-color: #4A90E2; }
+.modal-content input:focus, .modal-content textarea:focus { border-color: #a18cd1; }
+.file-input { margin-top: 5px; font-size: 1rem; }
 .btn-group { display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.2rem; }
 
 .simple-btn {
-    border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1.2rem;
-    cursor: pointer; border: none; font-family: 'Jua', sans-serif; font-weight: normal;
+    border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1.1rem;
+    cursor: pointer; border: none; font-family: inherit;
 }
-.save-btn { background-color: #4A90E2; color: #fff; }
+.save-btn { background-color: #34495E; color: #fff; }
 .cancel-btn { background-color: #E74C3C; color: #fff; }
