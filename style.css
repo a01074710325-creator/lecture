@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
 :root {
-    /* 전체 글자 크기를 제어하는 기준값 */
     --base-font-size: 16px; 
 }
 
@@ -16,13 +15,14 @@ html {
 }
 
 body {
-    background-color: #f8f9fa;
+    /* 첨부해주신 디자인 느낌의 깊은 푸른색 배경 */
+    background: linear-gradient(135deg, #1A4EB8 0%, #102B6E 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    font-family: 'Jua', sans-serif; /* 동글동글한 폰트 적용 */
+    font-family: 'Jua', sans-serif;
 }
 
 .dashboard-container {
@@ -35,89 +35,114 @@ body {
     padding: 1.5rem;
 }
 
+/* 대시보드 위젯(패널) 공통 스타일 */
 .panel {
     border-radius: 1.5rem;
     padding: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    border: 2px solid rgba(255, 255, 255, 0.6);
+    position: relative;
+    overflow: hidden;
 }
 
-/* 파스텔 톤 색상 지정 */
-.pastel-blue { background-color: #E3F2FD; }   
-.pastel-yellow { background-color: #FFF9C4; } 
-.pastel-green { background-color: #E8F5E9; }  
-.pastel-purple { background-color: #F3E5F5; } 
-.pastel-pink { background-color: #FFEBEE; }   
-.pastel-peach { background-color: #FFF3E0; }  
+/* 다채로운 위젯 색상 구성 */
+.card-white { background-color: #ffffff; color: #333; }
+.card-white h2 { color: #555; }
+.card-orange { background-color: #F88559; color: #fff; }
+.card-orange h1 { color: #fff; }
+.card-blue { background-color: #4A90E2; color: #fff; }
+.card-blue h2 { color: #E6F0FA; }
+.card-transparent { background-color: rgba(255, 255, 255, 0.1); border: 2px dashed rgba(255,255,255,0.3); }
+.card-transparent h2 { color: #fff; }
 
-h1 { color: #2C3E50; font-size: 2.5rem; font-weight: normal; }
-h2 { color: #5D6D7E; font-size: 1.5rem; margin-bottom: 1.5rem; font-weight: normal; }
+h1 { font-size: 2.8rem; font-weight: normal; }
+h2 { font-size: 1.5rem; margin-bottom: 1.5rem; font-weight: normal; }
 
-/* 시계 디자인 */
-#clock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* 아날로그 시계 스타일 */
+.analog-clock {
+    width: 140px; height: 140px;
+    border: 6px solid #E0E5EC;
+    border-radius: 50%;
+    position: relative;
+    background: #ffffff;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.1);
 }
-.clock-time { font-size: 3.5rem; color: #34495E; line-height: 1.2; }
-.clock-sec { font-size: 2.2rem; color: #5D6D7E; }
+.hand {
+    position: absolute;
+    bottom: 50%; left: 50%;
+    transform-origin: bottom center;
+    background: #333;
+    border-radius: 4px;
+    transform: translateX(-50%) rotate(0deg);
+}
+.hour-hand { width: 6px; height: 35%; background: #2C3E50; z-index: 3; }
+.min-hand { width: 4px; height: 45%; background: #5D6D7E; z-index: 2; }
+.sec-hand { width: 2px; height: 50%; background: #E74C3C; z-index: 4; }
+.center-dot {
+    position: absolute; top: 50%; left: 50%;
+    width: 14px; height: 14px;
+    background: #2C3E50;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
 
-#qr-image { width: 10rem; height: 10rem; object-fit: contain; background: #fff; padding: 10px; border-radius: 12px; }
+#qr-image { width: 9rem; height: 9rem; object-fit: contain; background: #fff; border-radius: 12px; }
 
 #lecture-sequence {
-    list-style: none;
-    text-align: left;
-    width: 90%;
-    font-size: 1.5rem;
-    line-height: 2;
-    color: #34495E;
+    list-style: none; text-align: left; width: 90%;
+    font-size: 1.5rem; line-height: 2; color: #ffffff;
 }
 
-/* 심플 버튼 (일반) */
-.simple-btn {
-    background-color: #ffffff;
-    border: 1px solid #ced4da;
-    border-radius: 12px;
-    padding: 0.8rem 1.5rem;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: #495057;
-    font-family: 'Jua', sans-serif;
-}
-.simple-btn:hover { background-color: #e9ecef; }
-.save-btn { background-color: #e3f2fd; color: #0d47a1; border-color: #bbdefb; }
-.save-btn:hover { background-color: #bbdefb; }
-.cancel-btn { background-color: #ffebee; color: #b71c1c; border-color: #ffcdd2; }
-.cancel-btn:hover { background-color: #ffcdd2; }
-
-/* 예쁜 음악 재생 버튼 */
-.pretty-btn {
-    background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+/* 음악 재생 버튼 (첨부이미지 스타일) */
+.play-btn {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #E09FFF, #B46BEE, #833AB4);
     border: none;
-    border-radius: 50px;
-    padding: 1rem 2rem;
-    font-size: 1.5rem;
-    color: #2C3E50;
+    box-shadow: 0 8px 15px rgba(131, 58, 180, 0.4);
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(161, 196, 253, 0.5);
-    transition: transform 0.2s, box-shadow 0.2s;
-    font-family: 'Jua', sans-serif;
+    position: relative;
+    transition: transform 0.2s;
 }
-.pretty-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(161, 196, 253, 0.7);
+.play-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 55%;
+    transform: translate(-50%, -50%);
+    border-style: solid;
+    border-width: 15px 0 15px 24px;
+    border-color: transparent transparent transparent #ffffff;
 }
+.play-btn.playing { background: radial-gradient(circle at 30% 30%, #FF9F9F, #EE6B6B, #B43A3A); box-shadow: 0 8px 15px rgba(180, 58, 58, 0.4); }
+.play-btn.playing::after {
+    border-style: solid; border-width: 0; width: 20px; height: 20px;
+    background-color: #ffffff; left: 50%;
+}
+.play-btn:hover { transform: scale(1.05); }
 
-/* 설정 모달창 */
+/* 설정 버튼 (첨부이미지 스타일) */
+.settings-btn {
+    width: 80px; height: 80px;
+    border-radius: 25px;
+    background: #25262B;
+    border: 3px solid #3B3C42;
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+.settings-icon { font-size: 45px; color: #A0A2AB; }
+.settings-btn:hover { transform: scale(1.05); }
+
+/* 모달창 스타일 */
 .modal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.6);
     display: flex; justify-content: center; align-items: center;
     z-index: 1000;
 }
@@ -125,12 +150,19 @@ h2 { color: #5D6D7E; font-size: 1.5rem; margin-bottom: 1.5rem; font-weight: norm
 .modal-content {
     background: #ffffff; padding: 2.5rem; border-radius: 1.5rem;
     width: 32rem; display: flex; flex-direction: column; gap: 0.8rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 }
 .modal-content h3 { color: #2C3E50; margin-bottom: 0.5rem; font-size: 1.8rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; font-weight: normal; }
 .modal-content label { color: #5D6D7E; margin-top: 0.5rem; font-size: 1.2rem; }
 .modal-content input, .modal-content textarea { 
     padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1.1rem; outline: none; font-family: 'Jua', sans-serif; resize: none;
 }
-.modal-content input:focus, .modal-content textarea:focus { border-color: #90caf9; }
+.modal-content input:focus, .modal-content textarea:focus { border-color: #4A90E2; }
 .btn-group { display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.2rem; }
+
+.simple-btn {
+    border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1.2rem;
+    cursor: pointer; border: none; font-family: 'Jua', sans-serif; font-weight: normal;
+}
+.save-btn { background-color: #4A90E2; color: #fff; }
+.cancel-btn { background-color: #E74C3C; color: #fff; }
