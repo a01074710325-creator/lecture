@@ -1,8 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+:root {
+    /* 전체 글자 크기를 제어하는 기준값 */
+    --base-font-size: 16px; 
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+}
+
+html {
+    font-size: var(--base-font-size);
 }
 
 body {
@@ -12,97 +22,115 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    font-family: 'Jua', sans-serif; /* 동글동글한 폰트 적용 */
 }
 
 .dashboard-container {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: 1fr 1.5fr;
-    gap: 20px;
+    gap: 1.5rem;
     width: 96vw;
     height: 92vh;
-    padding: 20px;
+    padding: 1.5rem;
 }
 
 .panel {
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.6);
 }
 
 /* 파스텔 톤 색상 지정 */
-.pastel-blue { background-color: #E3F2FD; }   /* 시간 */
-.pastel-yellow { background-color: #FFF9C4; } /* 강좌명 */
-.pastel-green { background-color: #E8F5E9; }  /* QR */
-.pastel-purple { background-color: #F3E5F5; } /* 설정 */
-.pastel-pink { background-color: #FFEBEE; }   /* 강의 순서 */
-.pastel-peach { background-color: #FFF3E0; }  /* 유튜브 */
+.pastel-blue { background-color: #E3F2FD; }   
+.pastel-yellow { background-color: #FFF9C4; } 
+.pastel-green { background-color: #E8F5E9; }  
+.pastel-purple { background-color: #F3E5F5; } 
+.pastel-pink { background-color: #FFEBEE; }   
+.pastel-peach { background-color: #FFF3E0; }  
 
-h1 { color: #2C3E50; font-size: 2.2rem; }
-h2 { color: #5D6D7E; font-size: 1.2rem; margin-bottom: 20px; }
+h1 { color: #2C3E50; font-size: 2.5rem; font-weight: normal; }
+h2 { color: #5D6D7E; font-size: 1.5rem; margin-bottom: 1.5rem; font-weight: normal; }
 
-#clock { font-size: 3.5rem; font-weight: bold; color: #34495E; letter-spacing: 2px; }
-#qr-image { width: 160px; height: 160px; object-fit: contain; background: #fff; padding: 10px; border-radius: 12px; }
+/* 시계 디자인 */
+#clock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.clock-time { font-size: 3.5rem; color: #34495E; line-height: 1.2; }
+.clock-sec { font-size: 2.2rem; color: #5D6D7E; }
+
+#qr-image { width: 10rem; height: 10rem; object-fit: contain; background: #fff; padding: 10px; border-radius: 12px; }
 
 #lecture-sequence {
     list-style: none;
     text-align: left;
-    width: 85%;
-    font-size: 1.4rem;
+    width: 90%;
+    font-size: 1.5rem;
     line-height: 2;
     color: #34495E;
-    font-weight: 500;
 }
 
-/* 심플한 버튼 디자인 */
+/* 심플 버튼 (일반) */
 .simple-btn {
     background-color: #ffffff;
     border: 1px solid #ced4da;
-    border-radius: 8px;
-    padding: 12px 24px;
-    font-size: 1.1rem;
+    border-radius: 12px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.2rem;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s;
     color: #495057;
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    font-family: 'Jua', sans-serif;
 }
-
-.simple-btn:hover { background-color: #e9ecef; border-color: #adb5bd; }
+.simple-btn:hover { background-color: #e9ecef; }
 .save-btn { background-color: #e3f2fd; color: #0d47a1; border-color: #bbdefb; }
 .save-btn:hover { background-color: #bbdefb; }
 .cancel-btn { background-color: #ffebee; color: #b71c1c; border-color: #ffcdd2; }
 .cancel-btn:hover { background-color: #ffcdd2; }
 
-/* 설정 모달창 디자인 */
+/* 예쁜 음악 재생 버튼 */
+.pretty-btn {
+    background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    color: #2C3E50;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(161, 196, 253, 0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'Jua', sans-serif;
+}
+.pretty-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(161, 196, 253, 0.7);
+}
+
+/* 설정 모달창 */
 .modal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.4);
     display: flex; justify-content: center; align-items: center;
     z-index: 1000;
 }
-
 .modal.hidden { display: none; }
-
 .modal-content {
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 16px;
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    background: #ffffff; padding: 2.5rem; border-radius: 1.5rem;
+    width: 32rem; display: flex; flex-direction: column; gap: 0.8rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
-
-.modal-content h3 { color: #2C3E50; margin-bottom: 10px; font-size: 1.5rem; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-.modal-content label { font-weight: bold; color: #5D6D7E; margin-top: 10px; }
-.modal-content input { padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; outline: none; }
-.modal-content input:focus { border-color: #90caf9; box-shadow: 0 0 5px rgba(144, 202, 249, 0.5); }
-.btn-group { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+.modal-content h3 { color: #2C3E50; margin-bottom: 0.5rem; font-size: 1.8rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; font-weight: normal; }
+.modal-content label { color: #5D6D7E; margin-top: 0.5rem; font-size: 1.2rem; }
+.modal-content input, .modal-content textarea { 
+    padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1.1rem; outline: none; font-family: 'Jua', sans-serif; resize: none;
+}
+.modal-content input:focus, .modal-content textarea:focus { border-color: #90caf9; }
+.btn-group { display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.2rem; }
