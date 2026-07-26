@@ -8,34 +8,38 @@
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- 좌측 상단: 실시간 시간 -->
-        <div class="panel top-left pastel-blue">
+        <!-- 좌측 상단: 아날로그 시계 -->
+        <div class="panel card-white">
             <h2>현재 시각</h2>
-            <div id="clock">
-                <span class="clock-time" id="clock-time">00시 00분</span>
-                <span class="clock-sec" id="clock-sec">00초</span>
+            <div class="analog-clock">
+                <div class="hand hour-hand" id="hour-hand"></div>
+                <div class="hand min-hand" id="min-hand"></div>
+                <div class="hand sec-hand" id="sec-hand"></div>
+                <div class="center-dot"></div>
             </div>
         </div>
 
         <!-- 가운데 상단: 강좌명 -->
-        <div class="panel top-center pastel-yellow">
+        <div class="panel card-orange">
             <h1 id="course-title">강좌명을 입력해 주십시오</h1>
         </div>
 
         <!-- 우측 상단: 출석 QR -->
-        <div class="panel top-right pastel-green">
+        <div class="panel card-white">
             <h2>출석 확인</h2>
             <img id="qr-image" src="https://via.placeholder.com/150?text=QR+Code" alt="출석 QR 코드">
         </div>
 
-        <!-- 좌측 하단: 설정 -->
-        <div class="panel bottom-left pastel-purple">
+        <!-- 좌측 하단: 설정 버튼 (다크 모드 기어 아이콘 느낌) -->
+        <div class="panel card-transparent">
             <h2>대시보드 설정</h2>
-            <button id="settings-btn" class="simple-btn">설정 열기</button>
+            <button id="settings-btn" class="settings-btn">
+                <span class="settings-icon">⚙️</span>
+            </button>
         </div>
 
         <!-- 가운데 하단: 강의 순서 -->
-        <div class="panel bottom-center pastel-pink">
+        <div class="panel card-blue">
             <h2>강의 순서</h2>
             <ul id="lecture-sequence">
                 <li>1. 등록 및 오리엔테이션</li>
@@ -44,33 +48,35 @@
             </ul>
         </div>
 
-        <!-- 우측 하단: 유튜브 연동 (음악 재생 버튼) -->
-        <div class="panel bottom-right pastel-peach">
+        <!-- 우측 하단: 음악 재생 버튼 (보라색 그라데이션 둥근 버튼) -->
+        <div class="panel card-white">
             <h2>배경 음악</h2>
-            <button id="music-toggle-btn" class="pretty-btn">🎵 음악 재생</button>
+            <button id="music-toggle-btn" class="play-btn"></button>
             <div id="yt-container" style="display: none;"></div>
         </div>
     </div>
 
-    <!-- 설정 모달창 (숨김 처리됨) -->
+    <!-- 설정 모달창 -->
     <div id="settings-modal" class="modal hidden">
         <div class="modal-content">
             <h3>대시보드 정보 설정</h3>
             
             <label>글자 크기 조절:</label>
-            <input type="range" id="input-fontsize" min="12" max="24" value="16">
+            <input type="range" id="input-fontsize" min="12" max="28" value="16">
 
             <label>강좌명 기입:</label>
-            <input type="text" id="input-title" placeholder="변경하실 강좌명을 입력하십시오.">
+            <input type="text" id="input-title" placeholder="변경하실 강좌명을 입력하십시오." value="강좌명을 입력해 주십시오">
 
             <label>출석 QR 이미지 주소(URL):</label>
             <input type="text" id="input-qr" placeholder="QR 코드 이미지의 링크를 입력하십시오.">
 
             <label>유튜브 영상 주소(URL):</label>
-            <input type="text" id="input-youtube" placeholder="재생할 유튜브 링크를 입력하십시오.">
+            <input type="text" id="input-youtube" placeholder="재생할 유튜브 링크를 입력하십시오." value="https://www.youtube.com/watch?v=jfKfPfyJRdk">
 
             <label>강의 순서 (줄바꿈으로 구분하여 입력하십시오):</label>
-            <textarea id="input-sequence" rows="4" placeholder="1. 등록 및 오리엔테이션&#10;2. 본 강의 진행&#10;3. 질의응답 및 마무리"></textarea>
+            <textarea id="input-sequence" rows="4">1. 등록 및 오리엔테이션
+2. 본 강의 진행
+3. 질의응답 및 마무리</textarea>
 
             <div class="btn-group">
                 <button id="save-settings-btn" class="simple-btn save-btn">적용하기</button>
