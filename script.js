@@ -1,29 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // 강제로 새로운 저장소를 사용하도록 이름 변경 (이전 오류 데이터 무시)
-    const STORAGE_KEY = "dashboardSettings_v2";
+    // [중요 수정] 스크립트 에러를 방지하기 위해 변수들을 최상단에 우선 선언합니다.
+    const STORAGE_KEY = "dashboardSettings_v4"; 
+    let isPlaying = false;
+    let currentVideoId = "jfKfPfyJRdk";
+    let currentQrBase64 = "https://via.placeholder.com/200?text=QR+Code";
 
+    // 기본 설정값 정의
     const defaultSettings = {
         fontSize: "16",
         title: "강좌명을 입력해 주십시오",
-        qr: "https://via.placeholder.com/200?text=QR+Code", 
+        qr: currentQrBase64, 
         youtube: "https://www.youtube.com/watch?v=jfKfPfyJRdk",
         sequence: "1. 등록 및 오리엔테이션\n2. 본 강의 진행\n3. 질의응답 및 마무리"
     };
 
-    // 설정 불러오기
+    // 로컬 스토리지 데이터 불러오기
     let savedSettings = Object.assign({}, defaultSettings);
     try {
         const localData = JSON.parse(localStorage.getItem(STORAGE_KEY));
         if (localData) {
             savedSettings = Object.assign(savedSettings, localData);
+            currentQrBase64 = savedSettings.qr; // 저장된 이미지가 있으면 불러옴
         }
     } catch (error) {
         console.error("설정 불러오기 오류, 기본값을 사용합니다.", error);
     }
     
-    let currentQrBase64 = savedSettings.qr;
-
     // 화면에 설정 적용하는 함수
     function applySettings(settings) {
         if(!settings) return;
@@ -57,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 모달창에 현재 값 채워넣기
+    // 설정 모달창에 현재 값 채워넣기 함수
     function populateModalInputs(settings) {
         document.getElementById('input-fontsize').value = settings.fontSize || 16;
         document.getElementById('input-title').value = settings.title || "";
@@ -66,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('input-qr-file').value = ""; 
     }
 
-    // 아날로그 시계 작동
+    // 아날로그 시계 작동 함수
     const hourHand = document.getElementById('hour-hand');
     const minHand = document.getElementById('min-hand');
     const secHand = document.getElementById('sec-hand');
@@ -95,19 +98,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // 초기 화면에 데이터 적용
     applySettings(savedSettings);
 
-    // 버튼 요소들 불러오기
+    // 버튼 요소들 변수 할당
     const settingsModal = document.getElementById('settings-modal');
     const btnOpenSettings = document.getElementById('settings-btn');
     const btnCloseSettings = document.getElementById('close-settings-btn');
     const btnSaveSettings = document.getElementById('save-settings-btn');
     const qrFileInput = document.getElementById('input-qr-file');
-
-    let isPlaying = false;
-    let currentVideoId = "jfKfPfyJRdk"; 
     const musicBtn = document.getElementById('music-toggle-btn');
     const ytContainer = document.getElementById('yt-container');
 
-    // QR 파일 업로드 처리
+    // QR 사진 파일 업로드 처리
     if (qrFileInput) {
         qrFileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 설정창 열기
+    // 설정창 열기 버튼 이벤트
     if (btnOpenSettings) {
         btnOpenSettings.addEventListener('click', () => {
             let currentSaved = Object.assign({}, defaultSettings);
@@ -136,12 +136,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 설정창 닫기
+    // 설정창 닫기 버튼 이벤트
     if (btnCloseSettings) {
         btnCloseSettings.addEventListener('click', () => settingsModal.classList.add('hidden'));
     }
 
-    // 설정 저장
+    // 설정창 저장 버튼 이벤트 (용량 초과 방지 기능 추가)
     if (btnSaveSettings) {
         btnSaveSettings.addEventListener('click', () => {
             const newSettings = {
@@ -152,7 +152,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 sequence: document.getElementById('input-sequence').value
             };
 
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(newSettings));
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(newSettings));
+            } catch (e) {
+                // 고화질 이미지를 넣어 브라우저 저장 용량이 초과될 경우 경고 표시
+                alert("업로드하신 QR 이미지의 용량이 너무 큽니다. 화면 캡처 등을 통해 용량을 줄인 사진을 올려주십시오.");
+                return; // 에러가 나면 창을 닫지 않고 중단
+            }
+            
             applySettings(newSettings);
 
             if (isPlaying) {
@@ -162,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 음악 재생
+    // 음악 재생 버튼 이벤트
     if (musicBtn) {
         musicBtn.addEventListener('click', () => {
             if (!isPlaying) {
