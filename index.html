@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>강의 대시보드</title>
-    <!-- 브라우저 캐시 문제를 해결하기 위한 강제 새로고침 꼬리표(?v=5) 추가 -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
     <div class="dashboard-container">
@@ -28,7 +27,9 @@
         <!-- 3열 1행: 출석 QR -->
         <div class="panel panel-qr">
             <h2 class="panel-title-text">출석 확인</h2>
-            <img id="qr-image" src="https://via.placeholder.com/200?text=QR+Code" alt="출석 QR 코드">
+            <div class="qr-wrapper">
+                <img id="qr-image" src="https://via.placeholder.com/200?text=QR+Code" alt="출석 QR 코드">
+            </div>
         </div>
 
         <!-- 1열 2행: 설정 버튼 -->
@@ -82,7 +83,6 @@
         </div>
     </div>
     
-    <!-- 스크립트 역시 강제 최신화 꼬리표 추가 -->
-    <script src="script.js?v=5"></script>
+    <script src="script.js?v=6"></script>
 </body>
 </html>
