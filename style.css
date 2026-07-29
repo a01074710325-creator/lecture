@@ -2,10 +2,19 @@
 
 :root {
     --base-font-size: 16px; 
-    --bg-color: #F0F4F8; 
-    --panel-bg: #FFFFFF; 
-    --text-main: #2C3E50;
-    --text-sub: #7F8C8D;
+    /* 첨부 이미지 기반의 다크 블루/테크 느낌 배경 */
+    --bg-grad-start: #0B1633; 
+    --bg-grad-end: #173872;
+    /* 반투명한 유리 질감(Glassmorphism) 패널 배경 */
+    --panel-bg: rgba(255, 255, 255, 0.05); 
+    --panel-border: rgba(255, 255, 255, 0.15);
+    /* 텍스트 컬러 (어두운 배경에 맞춘 흰색 계열) */
+    --text-main: #F4F7FB;
+    --text-sub: #90A4AE;
+    /* 첨부 이미지의 핑크/블루 포인트 컬러 */
+    --accent-pink: #FCA3B7;
+    --accent-blue: #4A90E2;
+    --accent-cyan: #00D2FF;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -13,7 +22,7 @@
 html { font-size: var(--base-font-size); }
 
 body {
-    background-color: var(--bg-color);
+    background: radial-gradient(circle at 50% 0%, var(--bg-grad-end), var(--bg-grad-start));
     display: flex; justify-content: center; align-items: center;
     height: 100vh; margin: 0;
     font-family: 'NanumSquareRound', 'Jua', sans-serif;
@@ -33,100 +42,128 @@ body {
 
 .panel {
     background-color: var(--panel-bg);
-    border-radius: 16px;
+    border-radius: 20px;
     padding: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    /* 유리 질감 효과 */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     display: flex; flex-direction: column;
     justify-content: center; align-items: center; text-align: center;
 }
 
-.panel-clock { grid-area: clock; border-top: 6px solid #4A90E2; } 
-.panel-title { grid-area: title; border-top: 6px solid #F39C12; } 
-.panel-qr { grid-area: qr; border-top: 6px solid #2ECC71; } 
-.panel-settings { grid-area: set; border-top: 6px solid #9B59B6; } 
-.panel-sequence { grid-area: seq; border-top: 6px solid #E74C3C; justify-content: flex-start; padding-top: 30px; } 
-.panel-music { grid-area: music; border-top: 6px solid #34495E; } 
+/* 각 패널 상단 네온 포인트 컬러 (다크 테마에 맞게 조정) */
+.panel-clock { grid-area: clock; border-top: 4px solid var(--accent-cyan); } 
+.panel-title { grid-area: title; border-top: 4px solid var(--accent-blue); } 
+.panel-qr { grid-area: qr; border-top: 4px solid #A29BFE; } 
+.panel-settings { grid-area: set; border-top: 4px solid #FDCB6E; } 
+.panel-sequence { grid-area: seq; border-top: 4px solid var(--accent-pink); justify-content: flex-start; padding-top: 30px; } 
+.panel-music { grid-area: music; border-top: 4px solid #00CEC9; } 
 
-h1 { font-size: 2.5rem; font-weight: normal; color: #1A252F; }
+h1 { font-size: 2.5rem; font-weight: normal; color: #FFFFFF; text-shadow: 0 2px 10px rgba(255,255,255,0.2); }
 .panel-title-text { font-size: 1.3rem; margin-bottom: 1rem; color: var(--text-sub); font-weight: bold; }
 
+/* 시계 디자인 (다크 테마에 어울리도록 수정) */
 .analog-clock {
     width: 160px; height: 160px;
-    border: 6px solid #E4E9F2;
+    border: 4px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%; position: relative;
-    background: #ffffff;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
     margin-top: 10px;
 }
 .hand {
     position: absolute; bottom: 50%; left: 50%;
-    transform-origin: bottom center; background: #333;
+    transform-origin: bottom center;
     border-radius: 10px; transform: translateX(-50%) rotate(0deg);
 }
-.hour-hand { width: 6px; height: 30%; background: #2C3E50; z-index: 3; }
-.min-hand { width: 4px; height: 40%; background: #7F8C8D; z-index: 2; }
-.sec-hand { width: 2px; height: 45%; background: #E74C3C; z-index: 4; }
+.hour-hand { width: 6px; height: 30%; background: #FFFFFF; z-index: 3; }
+.min-hand { width: 4px; height: 40%; background: var(--accent-cyan); z-index: 2; }
+.sec-hand { width: 2px; height: 45%; background: var(--accent-pink); z-index: 4; }
 .center-dot {
     position: absolute; top: 50%; left: 50%;
-    width: 14px; height: 14px; background: #2C3E50;
+    width: 14px; height: 14px; background: #FFFFFF;
     border-radius: 50%; transform: translate(-50%, -50%); z-index: 5;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
-#qr-image { width: 100%; max-width: 150px; aspect-ratio: 1/1; object-fit: contain; border-radius: 8px; }
+/* 어두운 배경에서 QR코드가 잘 보이도록 흰색 배경 보호막 추가 */
+.qr-wrapper {
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 12px;
+}
+#qr-image { width: 100%; max-width: 140px; aspect-ratio: 1/1; object-fit: contain; }
 
 #lecture-sequence {
     list-style: none; text-align: left; width: 90%;
-    font-size: 1.4rem; line-height: 2.2; color: var(--text-main);
+    font-size: 1.4rem; line-height: 2.2; color: #E3E9F0;
 }
 
+/* 둥근 아이콘 버튼 디자인 (반투명 글래스) */
 .icon-btn {
     width: 90px; height: 90px; border-radius: 50%;
-    border: none; display: flex; justify-content: center; align-items: center;
-    cursor: pointer; transition: transform 0.2s ease;
-    background-color: #F4F6F8; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer; transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
-.icon-btn:hover { transform: scale(1.05); }
+.icon-btn:hover { transform: scale(1.05); background: rgba(255, 255, 255, 0.2); }
 .btn-icon { font-size: 45px; }
 
+/* 음악 재생 버튼 (첨부 이미지의 소프트 핑크 그라데이션) */
 .play-btn {
-    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+    background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%);
+    border: none;
     position: relative;
+    box-shadow: 0 8px 20px rgba(252, 163, 183, 0.4);
 }
+.play-btn:hover { background: linear-gradient(135deg, #FFB4B8 0%, #FFF0F5 100%); }
 .play-btn::after {
     content: ''; position: absolute; top: 50%; left: 54%;
     transform: translate(-50%, -50%);
     border-style: solid; border-width: 15px 0 15px 24px;
-    border-color: transparent transparent transparent #ffffff;
+    border-color: transparent transparent transparent #FFFFFF;
 }
-.play-btn.playing { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+.play-btn.playing { background: linear-gradient(135deg, #A1C4FD 0%, #C2E9FB 100%); box-shadow: 0 8px 20px rgba(161, 196, 253, 0.4); }
 .play-btn.playing::after {
     border-style: solid; border-width: 0; width: 24px; height: 24px;
-    background-color: #ffffff; left: 50%; border-radius: 2px;
+    background-color: #FFFFFF; left: 50%; border-radius: 4px;
 }
 
+/* 모달창 스타일 (다크 테마) */
 .modal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.5); 
+    background: rgba(0, 0, 0, 0.7); 
+    backdrop-filter: blur(5px);
     display: flex; justify-content: center; align-items: center; z-index: 1000;
 }
 .modal.hidden { display: none; }
 .modal-content {
-    background: #ffffff; padding: 2.5rem; border-radius: 20px;
+    background: #1B2B4C; padding: 2.5rem; border-radius: 20px;
     width: 35rem; display: flex; flex-direction: column; gap: 0.8rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #FFF;
 }
-.modal-content h3 { color: var(--text-main); font-size: 1.6rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
+.modal-content h3 { font-size: 1.6rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; color: var(--accent-cyan); }
 .modal-content label { color: var(--text-sub); margin-top: 0.5rem; font-size: 1.1rem; }
 .modal-content input[type="text"], .modal-content textarea { 
-    padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1.1rem; outline: none; font-family: inherit; resize: none;
+    padding: 0.8rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; 
+    font-size: 1.1rem; outline: none; font-family: inherit; resize: none;
+    background: rgba(0,0,0,0.2); color: #FFF;
 }
-.modal-content input:focus, .modal-content textarea:focus { border-color: #4A90E2; }
-.file-input { margin-top: 5px; font-size: 1rem; }
+.modal-content input:focus, .modal-content textarea:focus { border-color: var(--accent-cyan); }
+.file-input { margin-top: 5px; font-size: 1rem; color: #FFF; }
 .btn-group { display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.2rem; }
 
 .simple-btn {
     border-radius: 8px; padding: 0.8rem 1.5rem; font-size: 1.1rem;
-    cursor: pointer; border: none; font-family: inherit;
+    cursor: pointer; border: none; font-family: inherit; font-weight: bold;
 }
-.save-btn { background-color: #34495E; color: #fff; }
-.cancel-btn { background-color: #E74C3C; color: #fff; }
+.save-btn { background-color: var(--accent-blue); color: #fff; }
+.save-btn:hover { background-color: #357ABD; }
+.cancel-btn { background-color: rgba(255,255,255,0.1); color: #FFF; border: 1px solid rgba(255,255,255,0.2); }
+.cancel-btn:hover { background-color: rgba(255,255,255,0.2); }
